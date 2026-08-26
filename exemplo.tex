@@ -1,27 +1,178 @@
+% ================================================================
+% ARQUIVO DE TESTE — senac-latex v1.4
+% Este arquivo foi baseado no exemplo .tex fornecido pelo autor e
+% amplia-o para exercitar as regras definidas para a classe.
+% ================================================================
+
+\begin{filecontents*}{\jobname.bib}
+@book{senac2014guia,
+  author    = {Senac São Paulo},
+  title     = {Guia para elaboração de trabalhos acadêmicos},
+  year      = {2014},
+  publisher = {Senac São Paulo},
+  address   = {São Paulo}
+}
+\end{filecontents*}
+
 \documentclass{senac-latex}
 
-\unidade{Santo Amaro}
-\autores{Auto do trabalho 1 \\ Autor do trabalho 2 \\ Autor do trabalho 3 \\ Autor do trabalho 4 \\ Autor do trabalho 5 \\ Autor do trabalho 6 \\ Autor do trabalho 7 \\ Autor do trabalho 8}
-
-\titulo{Título do trabalho}
-\subtitulo{Subtítulo do trabalho}
+\unidade{}
+\autores{Autor do trabalho 1 \\ Autor do trabalho 2 \\ Autor do trabalho 3}
+\titulo{Título do trabalho de teste}
+\subtitulo{Subtítulo do trabalho de teste}
 \local{São Paulo}
-\data{2012}
+\data{2026}
 
 % Dados da Folha de Rosto
-\tipotrabalho{Trabalho de conclusão de curso apresentado ao Centro Universitário Senac -- Santo Amaro, Polo Americana, como exigência parcial para obtenção do grau de Bacharel em Hotelaria.}
+\tipotrabalho{Trabalho de conclusão de curso apresentado ao Centro Universitário Senac -- Santo Amaro, como exigência parcial para obtenção do grau de Bacharel.}
 \orientador{Prof. Dr. Fulano de Tal}
 \coorientador{Profa. Dra. Ciclana de Tal}
 
 \begin{document}
 
-% 1. Imprime a Capa
-\imprimircapa
+% ================================================================
+% 1. ELEMENTOS PRÉ-TEXTUAIS
+% ================================================================
 
-% 2. Imprime a Folha de Rosto
+\imprimircapa
 \imprimirfolhaderosto
 
-% Inicio do Elementos Textuais
-teste
+\pdfbookmark[0]{\contentsname}{toc}
+\tableofcontents*
+\cleardoublepage
+
+% ================================================================
+% 2. ELEMENTOS TEXTUAIS
+% ================================================================
+
+\chapter{Introdução}
+
+Este parágrafo testa o corpo do trabalho em tamanho normal de 12 pt.
+Também contém uma nota de rodapé para verificar o elemento de tamanho
+reduzido.\footnote{Esta é uma nota de rodapé de teste. Ela deve utilizar
+o tamanho menor e uniforme definido pela classe.}
+
+\section{Estruturação do trabalho}
+
+Esta seção testa o título com apenas a primeira palavra capitalizada
+e em negrito.
+
+\subsection{Sobre citações e referências bibliográficas}
+
+Esta subseção testa o terceiro nível da hierarquia.
+
+\subsubsection{Citações no texto}
+
+Este texto testa o quarto nível da hierarquia.
+Uma citação curta pode ser feita normalmente \cite{senac2014guia}.
+
+\paragraph{Seção quinária para teste}
+
+Este texto testa o quinto nível da numeração progressiva.
+O título acima deve receber a numeração 1.1.1.1.1.
+
+\subparagraph{Nível posterior sem numeração}
+
+Este título existe deliberadamente para verificar que o nível posterior
+à seção quinária não recebe numeração progressiva.
+
+% ================================================================
+% CITAÇÃO COM MAIS DE TRÊS LINHAS
+% ================================================================
+
+\section{Citações longas}
+
+A seguir há uma citação propositalmente longa para verificar o
+tamanho reduzido aplicado às citações com mais de três linhas:
+
+\begin{citacao}
+Os elementos pré-textuais são aqueles que antecedem a apresentação do
+trabalho. Eles apresentam informações necessárias para identificar,
+contextualizar e organizar o documento acadêmico, contribuindo para a
+sua correta apresentação e consulta. Este bloco possui várias linhas
+para permitir a verificação visual do tamanho da fonte.
+\end{citacao}
+
+% ================================================================
+% TABELA + LEGENDA + FONTE
+% ================================================================
+
+\section{Tabelas}
+
+A Tabela~\ref{tab:teste} testa o título e a fonte da tabela.
+
+\begin{table}[htbp]
+\centering
+\caption{Tabela de teste da classe}
+\label{tab:teste}
+\begin{tabular}{lrr}
+\hline
+Item & Valor 1 & Valor 2 \\
+\hline
+A & 10 & 20 \\
+B & 30 & 40 \\
+C & 50 & 60 \\
+\hline
+\end{tabular}
+
+\fonte{Elaboração própria (2026).}
+\end{table}
+
+% ================================================================
+% ILUSTRAÇÃO + LEGENDA + FONTE
+% ================================================================
+
+\section{Ilustrações}
+
+A Figura~\ref{fig:teste} testa a legenda e a fonte de uma ilustração.
+
+\begin{figure}[htbp]
+\centering
+\rule{8cm}{4cm}
+\caption{Ilustração de teste da classe}
+\label{fig:teste}
+\fonte{Elaboração própria (2026).}
+\end{figure}
+
+% ================================================================
+% SEGUNDO CAPÍTULO
+% ================================================================
+
+\chapter{Desenvolvimento}
+
+Este segundo capítulo verifica simultaneamente duas regras:
+no corpo, o título deve aparecer em MAIÚSCULAS e negrito; no sumário,
+deve aparecer em MAIÚSCULAS, mas sem negrito.
+
+\section{Seção com capitalização normal}
+
+O título desta seção foi propositalmente escrito com apenas a primeira
+palavra capitalizada.
+
+\subsection{Subseção com capitalização normal}
+
+O mesmo teste é realizado para a subseção.
+
+\subsubsection{Subsubseção com capitalização normal}
+
+O mesmo teste é realizado para a subsubseção.
+
+\paragraph{Quinto nível numerado}
+
+O mesmo teste é realizado para a seção quinária.
+
+\chapter{Considerações finais}
+
+Este capítulo verifica novamente a formatação dos títulos e do sumário.
+
+\section{Conclusão}
+
+Texto final de teste.
+
+% ================================================================
+% ELEMENTOS PÓS-TEXTUAIS
+% ================================================================
+
+\bibliography{\jobname}
 
 \end{document}
