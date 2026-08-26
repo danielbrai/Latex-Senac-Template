@@ -1,0 +1,549 @@
+# senac-latex
+
+> Classe LaTeX para trabalhos acadêmicos e Projetos Integradores do Senac, desenvolvida sobre a base do [abnTeX2](https://www.abntex2.com.br/).
+
+**Versão:** `1.4`  
+**Status:** em desenvolvimento  
+**Licença:** GNU General Public License v3.0 (GPL-3.0)
+
+---
+
+## Sobre o projeto
+
+O `senac-latex` é uma classe LaTeX criada para centralizar a configuração de trabalhos acadêmicos do Senac em um único arquivo `.cls`.
+
+A proposta é separar **conteúdo** e **apresentação**: o autor escreve o trabalho normalmente em LaTeX, enquanto a classe cuida da estrutura institucional e das regras tipográficas configuradas para o template.
+
+A classe é baseada no `abnTeX2` e utiliza sua infraestrutura para elementos acadêmicos, citações, bibliografia e formatação de documentos.
+
+## Principais recursos
+
+- Classe própria `senac-latex`;
+- baseada em `abnTeX2`;
+- formato A4;
+- corpo principal em 12 pt;
+- suporte a português brasileiro;
+- capa personalizada;
+- folha de rosto personalizada;
+- interface para autores, título, subtítulo, unidade e instituição;
+- interface para tipo de trabalho, orientador e coorientador;
+- capítulos em maiúsculas e negrito;
+- seções em negrito, preservando a capitalização fornecida no `.tex`;
+- capítulos em maiúsculas e sem negrito no sumário;
+- sumário configurado até a seção quinária;
+- numeração progressiva até `1.1.1.1.1`;
+- níveis posteriores sem numeração;
+- suporte a citações e referências por `abntex2cite`;
+- configuração dos elementos de tamanho reduzido, como citações longas, notas de rodapé, paginação, legendas e fontes de tabelas/ilustrações;
+- arquivo de exemplo e arquivo de teste para validação do template.
+
+---
+
+## Requisitos
+
+### Distribuição LaTeX
+
+É necessária uma distribuição LaTeX com suporte aos pacotes utilizados pela classe, como:
+
+- [TeX Live](https://www.tug.org/texlive/);
+- [MacTeX](https://www.tug.org/mactex/);
+- MiKTeX.
+
+### Compilador
+
+A classe utiliza `fontspec`, portanto deve ser compilada com **LuaLaTeX** ou **XeLaTeX**.
+
+Exemplo:
+
+```bash
+lualatex exemplo.tex
+```
+
+Para documentos que utilizam referências bibliográficas, pode ser necessário executar o compilador mais de uma vez para atualizar referências e o sumário.
+
+---
+
+## Instalação
+
+A classe pode ser utilizada localmente sem instalação em uma árvore global do TeX.
+
+Coloque `senac-latex.cls` no mesmo diretório do arquivo `.tex`:
+
+```text
+meu-trabalho/
+├── senac-latex.cls
+└── trabalho.tex
+```
+
+No documento:
+
+```latex
+\documentclass{senac-latex}
+```
+
+Também é possível manter a classe em uma estrutura de projeto maior, desde que o mecanismo de busca do LaTeX consiga localizar o arquivo.
+
+---
+
+## Uso rápido
+
+Um documento mínimo pode ser estruturado assim:
+
+```latex
+\documentclass{senac-latex}
+
+\unidade{}
+\autores{Nome do Autor}
+
+\titulo{Título do trabalho}
+\subtitulo{Subtítulo do trabalho}
+
+\local{São Paulo}
+\data{2026}
+
+\tipotrabalho{
+Trabalho de conclusão de curso apresentado ao Centro Universitário Senac
+como exigência parcial para obtenção do grau de Bacharel.
+}
+
+\orientador{Prof. Dr. Nome do Orientador}
+\coorientador{Profa. Dra. Nome da Coorientadora}
+
+\begin{document}
+
+\imprimircapa
+\imprimirfolhaderosto
+
+\pdfbookmark[0]{\contentsname}{toc}
+\tableofcontents*
+\cleardoublepage
+
+\chapter{Introdução}
+
+Texto da introdução.
+
+\section{Estruturação do trabalho}
+
+Texto da seção.
+
+\subsection{Exemplo de subseção}
+
+Texto da subseção.
+
+\subsubsection{Exemplo de subsubseção}
+
+Texto da subsubseção.
+
+\paragraph{Exemplo de seção quinária}
+
+Texto da seção quinária.
+
+\chapter{Desenvolvimento}
+
+Texto do desenvolvimento.
+
+\end{document}
+```
+
+---
+
+## Configuração do documento
+
+### Unidade
+
+Use `\unidade{...}` para informar a unidade:
+
+```latex
+\unidade{Santo Amaro}
+```
+
+A classe possui tratamento específico para:
+
+```text
+Santo Amaro
+Campos do Jordão
+Águas de São Pedro
+EAD
+```
+
+Para `EAD`, a classe utiliza `SENAC` como nome da instituição.
+
+Também é possível substituir explicitamente o nome da instituição:
+
+```latex
+\instituicaosenac{NOME DA INSTITUIÇÃO}
+```
+
+### Autores
+
+```latex
+\autores{Nome do Autor}
+```
+
+Vários autores podem ser informados com quebras de linha:
+
+```latex
+\autores{
+Nome do Autor 1 \\
+Nome do Autor 2 \\
+Nome do Autor 3
+}
+```
+
+### Título
+
+```latex
+\titulo{Título do trabalho}
+```
+
+### Subtítulo
+
+```latex
+\subtitulo{Subtítulo do trabalho}
+```
+
+O subtítulo é opcional.
+
+### Local e data
+
+```latex
+\local{São Paulo}
+\data{2026}
+```
+
+### Tipo de trabalho
+
+```latex
+\tipotrabalho{
+Trabalho de conclusão de curso apresentado ao Centro Universitário Senac
+como exigência parcial para obtenção do grau de Bacharel.
+}
+```
+
+A classe também preserva a interface `\preambulo{...}` do `abnTeX2`.
+
+### Orientador e coorientador
+
+```latex
+\orientador{Prof. Dr. Nome do Orientador}
+\coorientador{Profa. Dra. Nome da Coorientadora}
+```
+
+---
+
+## Formatação
+
+### Fonte
+
+A classe é carregada com `12pt` e utiliza 12 pt como tamanho principal do trabalho.
+
+Elementos configurados para utilizar tamanho reduzido permanecem com a formatação específica do `abnTeX2`, incluindo:
+
+- citações longas;
+- notas de rodapé;
+- paginação;
+- legendas;
+- fontes de tabelas e ilustrações;
+- ficha catalográfica.
+
+### Capítulos
+
+Os capítulos são configurados para:
+
+- 12 pt;
+- negrito;
+- letras maiúsculas.
+
+```latex
+\chapter{Introdução}
+```
+
+Resultado esperado:
+
+```text
+1 INTRODUÇÃO
+```
+
+### Seções
+
+As seções são configuradas em 12 pt e negrito, sem conversão automática para maiúsculas.
+
+```latex
+\section{Estruturação do trabalho}
+```
+
+Resultado esperado:
+
+```text
+1.1 Estruturação do trabalho
+```
+
+A capitalização utilizada é a fornecida pelo autor no `.tex`.
+
+A classe também configura os níveis de subseção e subsubseção em 12 pt.
+
+---
+
+## Numeração progressiva
+
+A numeração progressiva está limitada à seção quinária.
+
+| Nível | Comando | Exemplo |
+|---|---|---|
+| 1 | `\chapter` | `1` |
+| 2 | `\section` | `1.1` |
+| 3 | `\subsection` | `1.1.1` |
+| 4 | `\subsubsection` | `1.1.1.1` |
+| 5 | `\paragraph` | `1.1.1.1.1` |
+
+A configuração utiliza:
+
+```latex
+\setcounter{secnumdepth}{4}
+```
+
+Exemplo:
+
+```latex
+\chapter{Metodologia}
+\section{Procedimentos}
+\subsection{Coleta de dados}
+\subsubsection{Instrumentos}
+\paragraph{Questionário aplicado}
+```
+
+Resultado esperado:
+
+```text
+1 METODOLOGIA
+1.1 Procedimentos
+1.1.1 Coleta de dados
+1.1.1.1 Instrumentos
+1.1.1.1.1 Questionário aplicado
+```
+
+Níveis posteriores, como `\subparagraph`, não recebem numeração progressiva.
+
+---
+
+## Sumário
+
+O sumário é configurado para acompanhar a hierarquia até a seção quinária:
+
+```latex
+\settocdepth{paragraph}
+```
+
+Os capítulos recebem tratamento específico:
+
+- no corpo: **maiúsculas e negrito**;
+- no sumário: **maiúsculas e sem negrito**.
+
+Exemplo no corpo:
+
+```text
+1 INTRODUÇÃO
+```
+
+Exemplo no sumário:
+
+```text
+1 INTRODUÇÃO ........................................ 5
+```
+
+A transformação para maiúsculas no sumário é feita sobre a entrada do capítulo, preservando a formatação do título no corpo do documento.
+
+---
+
+## Capa e folha de rosto
+
+A classe fornece versões personalizadas de:
+
+```latex
+\imprimircapa
+```
+
+e:
+
+```latex
+\imprimirfolhaderosto
+```
+
+A capa utiliza os dados informados por:
+
+```latex
+\unidade{}
+\autores{}
+\titulo{}
+\subtitulo{}
+\local{}
+\data{}
+```
+
+A folha de rosto também utiliza:
+
+```latex
+\tipotrabalho{}
+\orientador{}
+\coorientador{}
+```
+
+Os elementos textuais controlados pela classe são configurados para 12 pt.
+
+---
+
+## Citações e bibliografia
+
+A classe utiliza `abntex2cite` com configuração:
+
+```latex
+\RequirePackage[
+  alf,
+  abnt-emphasize=bf
+]{abntex2cite}
+```
+
+Exemplos:
+
+```latex
+\cite{referencia}
+```
+
+e:
+
+```latex
+\citeonline{referencia}
+```
+
+A bibliografia pode ser inserida com o mecanismo do `abnTeX2`, por exemplo:
+
+```latex
+\bibliography{./referencias}
+```
+
+---
+
+## Estrutura recomendada do projeto
+
+Para um trabalho individual:
+
+```text
+meu-trabalho/
+├── senac-latex.cls
+├── trabalho.tex
+├── referencias.bib
+└── figuras/
+    ├── figura-01.pdf
+    └── figura-02.png
+```
+
+Para desenvolvimento do próprio template:
+
+```text
+senac-latex/
+├── senac-latex.cls
+├── exemplo.tex
+├── teste-senac-v1.4.tex
+├── README.md
+└── LICENSE
+```
+
+---
+
+## Testes
+
+O projeto inclui um arquivo destinado à validação das principais funcionalidades:
+
+```text
+teste-senac-v1.4.tex
+```
+
+O teste cobre:
+
+- capa;
+- folha de rosto;
+- sumário;
+- capítulos;
+- seções;
+- subseções;
+- subsubseções;
+- seção quinária;
+- nível posterior sem numeração;
+- citação longa;
+- nota de rodapé;
+- tabelas;
+- ilustrações;
+- legendas;
+- fontes de tabelas e ilustrações;
+- bibliografia;
+- paginação.
+
+Ao modificar `senac-latex.cls`, recomenda-se recompilar o arquivo de teste e revisar o PDF resultante.
+
+---
+
+## Desenvolvimento
+
+A classe é mantida como um template em evolução.
+
+Alterações que afetem a apresentação do documento devem, sempre que possível, ser acompanhadas por:
+
+1. atualização do arquivo de teste;
+2. verificação da capa;
+3. verificação da folha de rosto;
+4. verificação do sumário;
+5. verificação dos níveis de numeração;
+6. verificação dos elementos de tamanho reduzido;
+7. compilação completa do documento de exemplo.
+
+A versão atual é:
+
+```text
+senac-latex v1.4
+```
+
+---
+
+## Limitações e escopo
+
+O `senac-latex` é uma classe de apresentação acadêmica. Ele não substitui as normas institucionais nem pretende validar o conteúdo acadêmico do trabalho.
+
+A classe atualmente fornece infraestrutura para os elementos explicitamente configurados no `.cls`. Elementos acadêmicos adicionais podem continuar utilizando os recursos do `abnTeX2` quando não houver uma implementação específica na classe.
+
+A ficha catalográfica, por exemplo, não possui um gerador institucional próprio implementado no `senac-latex.cls`; quando necessária, deve ser tratada pelos mecanismos disponíveis no `abnTeX2` ou pelo procedimento adotado pela instituição.
+
+---
+
+## Contribuindo
+
+Contribuições, correções e sugestões são bem-vindas.
+
+Antes de propor uma alteração estrutural na classe, recomenda-se:
+
+1. reproduzir o comportamento atual com o arquivo de teste;
+2. descrever a regra que deve ser atendida;
+3. apresentar o comportamento esperado;
+4. atualizar o teste quando a alteração exigir um novo caso;
+5. verificar se a alteração não afeta outros níveis de seção ou elementos do documento.
+
+Para alterações maiores, abra uma issue descrevendo o problema e o resultado esperado antes de implementar a mudança.
+
+---
+
+## Licença
+
+Este projeto é distribuído sob a **The LaTeX Project Public License 1.3c (LPPL Version 1.3c)**.
+
+Consulte o arquivo [`LICENSE`](./LICENSE) para o texto completo da licença.
+
+---
+
+## Créditos
+
+O `senac-latex` utiliza o [abnTeX2](https://www.abntex2.com.br/) como base para a estrutura e formatação de trabalhos acadêmicos em LaTeX.
+
+---
+
+## Status
+
+**senac-latex v1.4 — em desenvolvimento.**
