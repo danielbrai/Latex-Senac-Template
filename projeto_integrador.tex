@@ -1,0 +1,58 @@
+% ================================================================
+% ARQUIVO DE TESTE — senac-latex v1.4
+% Este arquivo foi baseado no exemplo .tex fornecido pelo autor e
+% amplia-o para exercitar as regras definidas para a classe.
+% ================================================================
+
+\documentclass{senac-latex}
+
+\unidade{}
+\autores{Daniel Brai Gonzales Marcos \\ Nikoli dos Reis Nunes \\ Rodrigo Marinho \\ Autor do trabalho 4 \\ Autor do trabalho 5 \\ Autor do trabalho 6 \\ Autor do trabalho 7 \\ Autor do trabalho 8}
+\titulo{BNDES: Análise Organizacional e Mercadológica}
+\subtitulo{Estudo do mercado de atuação, identidade e cultura, aspectos jurídicos, estrutura hierárquica e comunicação institucional}
+\local{São Paulo}
+\data{2026}
+
+% Dados da Folha de Rosto
+\tipotrabalho{Projeto Integrador apresentado ao Centro Universitário Senac, como requisito parcial para conclusão das atividades acadêmicas do primeiro semestre.}
+
+\orientador{Prof. Dr. Fulano de Tal}
+\coorientador{Profa. Dra. Ciclana de Tal}
+
+% Declaração de ferramentas de IA utilizadas
+\declaracaoia{
+  \item ChatGPT (OpenAI) --- revisão ortográfica e adequação gramatical;
+  \item Gemini (Google) --- revisão ortográfica e gramatical; formatação e correção da estuturação em LaTeX.
+}
+
+\begin{document}
+
+% ================================================================
+% 1. ELEMENTOS PRÉ-TEXTUAIS
+% ================================================================
+
+\imprimircapa
+\imprimirfolhaderosto
+
+\pdfbookmark[0]{\contentsname}{toc}
+\tableofcontents*
+\cleardoublepage
+
+% ================================================================
+% 2. ELEMENTOS TEXTUAIS
+% ================================================================
+
+\include{capitulos/01_empresa/root}
+\include{capitulos/02_perfil_consumidor/root}
+\include{capitulos/03_concorrencia/root}
+\include{capitulos/04_composto_mercadologico/root}
+\include{capitulos/05_estrutura_organizacional/root}
+
+% ================================================================
+% ELEMENTOS PÓS-TEXTUAIS
+% ================================================================
+
+\bibliographystyle{abntex2-alf}
+\bibliography{referencias}
+
+\end{document}

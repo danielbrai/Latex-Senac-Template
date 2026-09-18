@@ -53,6 +53,9 @@
   abnt-emphasize=bf
 ]{abntex2cite}
 
+\RequirePackage{graphicx}
+\RequirePackage{csquotes}
+
 %% ------------------------------------------------------------------------
 %% CONFIGURAÇÃO TIPOGRÁFICA DO TRABALHO
 %% ------------------------------------------------------------------------
@@ -80,6 +83,15 @@
 \setboolean{ABNTEXuppersection}{false}
 \setboolean{ABNTEXuppersubsection}{false}
 \setboolean{ABNTEXuppersubsubsection}{false}
+
+% ==================================================
+% CONFIGURAÇÃO DOS PARÁGRAFOS
+% ==================================================
+
+\RequirePackage{indentfirst}
+
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{0pt}
 
 %% ------------------------------------------------------------------------
 %% (3) INTERFACE DE DADOS
@@ -132,6 +144,14 @@
 
 \renewcommand{\tipotrabalho}[1]{%
   \preambulo{#1}%
+}
+
+% --- (e) Declaração sobre o Uso de IA ---
+
+\newcommand{\senac@declaracaoia}{}
+
+\newcommand{\declaracaoia}[1]{%
+  \renewcommand{\senac@declaracaoia}{#1}%
 }
 
 %% ------------------------------------------------------------------------
@@ -227,17 +247,29 @@
           \vspace{0.5cm}%
           {\normalsize
             \imprimirorientadorRotulo~\imprimirorientador
-          \par}%
+            \par}%
         }%
 
         \ifthenelse{\equal{\imprimircoorientador}{}}{}{%
           \vspace{0.2cm}%
           {\normalsize
             \imprimircoorientadorRotulo~\imprimircoorientador
-          \par}%
+            \par}%
         }%
       \end{minipage}\par
     }%
+
+    % No bloco da folha de rosto da senac-latex.cls:
+    \ifx\senac@declaracaoia\@empty
+    \else
+      \vspace{0.8cm}%
+      \begin{flushleft}
+        \small\textbf{Declaração sobre o uso de IA:} Foram utilizadas as ferramentas de IA listadas abaixo para revisão ortográfica, gramatical e formatação:
+        \begin{itemize}[leftmargin=1.5em, topsep=2pt, itemsep=0pt, parsep=0pt]
+          \senac@declaracaoia
+        \end{itemize}
+      \end{flushleft}
+    \fi
 
     \vfill
 
